@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Creative // Dennis Kimaita</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <video class="background-video" autoplay muted loop playsinline>
+      <source src="assets/background.mp4" type="video/mp4" />
+    </video>
+
+    <div class="background-overlay"></div>
+
+    <audio id="navigate-sfx" src="assets/audio/navigate.mp3"></audio>
+    <audio id="select-sfx" src="assets/audio/select.mp3"></audio>
+    <audio id="enter-sfx" src="assets/audio/enter.mp3"></audio>
+
+    <main class="creative">
+      <header class="dev-header">
+        <div>
+          <div class="dev-title">CREATIVE</div>
+          <div class="dev-email">dkimaita22@gmail.com</div>
+        </div>
+        <div class="dev-status">ARTIST // ONLINE</div>
+      </header>
+
+      <nav class="dev-navigation">
+        <button class="dev-nav-item" data-section="film">FILM</button>
+        <button class="dev-nav-item selected" data-section="music">
+          MUSIC
+        </button>
+        <button class="dev-nav-item" data-section="about">ABOUT</button>
+        <button class="dev-nav-item" data-section="awards">AWARDS</button>
+      </nav>
+
+      <section class="creative-content">
+        <div class="creative-header">
+          <span id="creative-label">MUSIC ARCHIVE</span>
+        </div>
+
+        <div id="creative-body"></div>
+      </section>
+
+      <footer class="controls">
+        <span>↑ ↓ SECTION</span>
+        <span>← → ITEM</span>
+        <span>[↵] OPEN</span>
+        <span>[ESC] BACK</span>
+      </footer>
+    </main>
+
+    <script src="bg-audio.js"></script>
+    <script src="creative.js"></script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+{
+  version: 2,
+  mediaFileName: 'sounds.mp4.mp3',
+  cutSegments: [
+    {
+      start: 0,
+      end: 8.512017264660495,
+      name: '',
+      selected: false,
+    },
+    {
+      start: 8.512017264660495,
+      end: 10.911457,
+      name: '',
+      selected: false,
+    },
+    {
+      start: 10.911457,
+      end: 12.416232638888888,
+      name: '',
+      selected: false,
+    },
+    {
+      start: 12.416232638888888,
+      end: 12.554190779320988,
+      name: '',
+      selected: false,
+    },
+    {
+      start: 12.554190779320988,
+      end: 13.602672646604939,
+      name: '',
+      selected: false,
+    },
+    {
+      start: 13.602672646604939,
+      end: 13.878588927469135,
+      name: '',
+      selected: true,
+    },
+    {
+      start: 13.878588927469135,
+      end: 17.879375,
+      name: '',
+      selected: false,
+    },
+  ],
+}

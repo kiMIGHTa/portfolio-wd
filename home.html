@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dennis Kimaita</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+    if (sessionStorage.getItem("portfolioStarted") === "true") {
+      document.documentElement.classList.add("preload-started");
+    }
+  </script>
+  </head>
+
+  <body>
+    <!-- Background -->
+    <video
+      id="background-video"
+      class="background-video"
+      autoplay
+      muted
+      loop
+      playsinline
+    >
+      <source src="assets/background.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Dark overlay -->
+    <div class="background-overlay"></div>
+
+    <!-- Audio -->
+    <audio
+      id="navigate-sfx"
+      src="assets/audio/navigate.mp3"
+      preload="auto"
+    ></audio>
+
+    <audio id="select-sfx" src="assets/audio/select.mp3" preload="auto"></audio>
+
+    <audio id="enter-sfx" src="assets/audio/enter.mp3" preload="auto"></audio>
+    <audio id="bg-sfx" src="assets/audio/background-audio.mp3" preload="auto" autoplay muted loop></audio>
+    
+    <div class="start-screen" id="start-screen">
+      <div class="start-name">DENNIS KIMAITA</div>
+
+      <div class="start-prompt">PRESS ANY BUTTON</div>
+    </div>
+
+    <!-- Main interface -->
+    <main class="menu">
+      <header class="name">DENNIS KIMAITA</header>
+
+      <div class="divider"></div>
+
+      <section class="experience">
+        <h1>SELECT EXPERIENCE</h1>
+
+        <nav class="experience-menu" aria-label="Experience selection">
+          <button class="menu-item selected" data-mode="development">
+            DEVELOPMENT
+          </button>
+
+          <button class="menu-item" data-mode="creative">CREATIVE</button>
+        </nav>
+      </section>
+
+      <div class="divider"></div>
+
+      <footer class="controls">
+        <span> [↑ / ↓] SELECT </span>
+
+        <span> [↵] ENTER </span>
+      </footer>
+    </main>
+
+    <script src="bg-audio.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

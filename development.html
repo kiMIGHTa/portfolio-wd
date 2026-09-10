@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Development // Dennis Kimaita</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <!-- =====================================================
+         BACKGROUND
+         ===================================================== -->
+
+    <video class="background-video" autoplay muted loop playsinline>
+      <source src="assets/background.mp4" type="video/mp4" />
+    </video>
+
+    <div class="background-overlay"></div>
+
+    <!-- Audio -->
+    <audio
+      id="navigate-sfx"
+      src="assets/audio/navigate.mp3"
+      preload="auto"
+    ></audio>
+
+    <audio id="select-sfx" src="assets/audio/select.mp3" preload="auto"></audio>
+
+    <audio id="enter-sfx" src="assets/audio/enter.mp3" preload="auto"></audio>
+    <!-- =====================================================
+         DEVELOPMENT INTERFACE
+         ===================================================== -->
+
+    <main class="development">
+      <!-- =================================================
+             HEADER
+             ================================================= -->
+
+      <header class="dev-header">
+        <div>
+          <div class="dev-title">DEVELOPMENT</div>
+          <div class="dev-email">d.kim.cyber@proton.me</div>
+        </div>
+
+        <div class="dev-status">SYSTEM // ONLINE</div>
+      </header>
+
+      <!-- =================================================
+             MAIN SECTION NAVIGATION
+             ================================================= -->
+
+      <nav class="dev-navigation">
+        <button class="dev-nav-item selected" data-section="projects">
+          PROJECTS
+        </button>
+
+        <button class="dev-nav-item" data-section="experience">
+          EXPERIENCE
+        </button>
+        <button class="dev-nav-item" data-section="education">EDUCATION</button>
+        <button class="dev-nav-item" data-section="certification">
+          CERTIFICATION
+        </button>
+
+        <button class="dev-nav-item" data-section="stack">STACK</button>
+
+        <button class="dev-nav-item" data-section="github">GITHUB</button>
+        <button class="dev-nav-item" data-section="about">ABOUT</button>
+      </nav>
+
+      <!-- =================================================
+             CONTENT AREA
+             ================================================= -->
+
+      <section class="dev-content">
+        <div class="dev-content-header">
+          <span id="section-label"> PROJECT DATABASE </span>
+        </div>
+
+        <!-- =============================================
+                 PROJECT / ITEM BROWSER
+                 ============================================= -->
+
+        <div class="content-browser">
+          <!-- ITEM LIST -->
+
+          <div class="item-list" id="item-list">
+            <!-- Populated by development.js -->
+          </div>
+
+          <!-- ITEM DETAILS -->
+
+          <article class="item-details" id="item-details">
+            <div class="item-number" id="item-number">01</div>
+
+            <h1 id="item-title">CAREERPILOT</h1>
+
+            <p class="item-description" id="item-description">
+              PERSONAL CAREER OPERATING SYSTEM
+            </p>
+
+            <div class="item-stack" id="item-stack">
+              PYTHON · DJANGO · REACT · PLAYWRIGHT
+            </div>
+
+            <div class="item-long-description" id="item-long-description">
+              Automates repetitive parts of the job search process while keeping
+              important decisions in human hands.
+            </div>
+
+            <button class="item-open" id="item-open">[↵] OPEN</button>
+          </article>
+        </div>
+        <div class="about-block" id="about-block" style="display: none">
+          <p class="about-text" id="dev-about-text"></p>
+          <blockquote class="about-quote" id="dev-about-quote"></blockquote>
+        </div>
+      </section>
+
+      <!-- =================================================
+             CONTROLS
+             ================================================= -->
+
+      <footer class="controls">
+        <span> ↑ ↓ SECTION </span>
+
+        <span> ← → ITEM </span>
+
+        <span> [↵] OPEN </span>
+
+        <span> [ESC] BACK </span>
+      </footer>
+    </main>
+
+    <script src="bg-audio.js"></script>
+    <script src="development.js"></script>
+  </body>
+</html>

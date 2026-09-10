@@ -1,0 +1,1465 @@
+@import url("https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=VT323&family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  font-family: "Pixelify Sans", monospace;
+}
+
+.preload-started #start-screen {
+  display: none;
+}
+
+/* =========================================================
+    BACKGROUND
+    ========================================================= */
+
+.background-video {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  z-index: -3;
+
+  transform: scale(1.02);
+
+  filter: contrast(1.08) brightness(0.72);
+
+  animation: backgroundBreathing 14s ease-in-out infinite;
+}
+
+.background-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: -2;
+
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.35) 35%,
+    rgba(0, 0, 0, 0.18) 70%,
+    rgba(0, 0, 0, 0.42) 100%
+  );
+
+  pointer-events: none;
+}
+
+/* =========================================================
+    SCREEN TEXTURE
+    ========================================================= */
+
+body::after {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  z-index: 10;
+
+  pointer-events: none;
+
+  opacity: 0.045;
+
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.15) 0px,
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+
+  mix-blend-mode: overlay;
+}
+
+/* =========================================================
+    MAIN MENU
+    ========================================================= */
+
+.menu {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+
+  padding: 6vh 5vw;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: space-between;
+}
+
+/* =========================================================
+    NAME
+    ========================================================= */
+
+.name {
+  align-self: flex-start;
+
+  font-size: clamp(18px, 1.5vw, 24px);
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+
+  animation: uiFadeIn 700ms ease forwards;
+}
+
+/* =========================================================
+    DIVIDERS
+    ========================================================= */
+
+.divider {
+  width: 100%;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+
+  opacity: 0.7;
+}
+
+.name + .divider {
+  margin-top: 2vh;
+}
+
+/* =========================================================
+    EXPERIENCE MENU
+    ========================================================= */
+
+.experience {
+  position: absolute;
+
+  left: 5vw;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 460px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  animation: menuEnter 800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* =========================================================
+    TITLE
+    ========================================================= */
+
+.experience h1 {
+  margin-bottom: 25px;
+
+  padding-left: 12px;
+
+  font-size: 12px;
+
+  font-weight: 400;
+
+  letter-spacing: 0.15em;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+    MENU ITEMS
+    ========================================================= */
+
+.experience-menu {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 4px;
+}
+
+.menu-item {
+  position: relative;
+
+  width: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.55);
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  font-size: 25px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+
+  text-align: left;
+
+  padding: 13px 18px;
+
+  transition:
+    color 120ms linear,
+    background 120ms linear,
+    transform 120ms ease,
+    padding-left 120ms ease;
+
+  image-rendering: pixelated;
+}
+
+/* =========================================================
+    SELECTION
+    ========================================================= */
+
+.menu-item.selected {
+  color: #000;
+
+  background: #fff;
+
+  transform: translateX(0);
+
+  padding-left: 20px;
+
+  text-shadow: none;
+
+  animation: selectionFlicker 180ms ease-out;
+}
+
+.menu-item::after {
+  content: none;
+}
+
+/* =========================================================
+    HOVER
+    ========================================================= */
+
+.menu-item:not(.selected):hover {
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.09);
+
+  padding-left: 20px;
+
+  transform: translateX(3px);
+}
+
+.menu-item.selected:hover {
+  background: #fff;
+
+  color: #000;
+}
+
+/* =========================================================
+    CONTROLS
+    ========================================================= */
+
+.controls {
+  position: absolute;
+
+  left: 5vw;
+  bottom: 5vh;
+
+  width: 460px;
+  height: 24px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  letter-spacing: 0.1em;
+
+  color: rgba(255, 255, 255, 0.6);
+
+  text-transform: uppercase;
+}
+
+/* =========================================================
+    START SCREEN
+    ========================================================= */
+
+.start-screen {
+  position: fixed;
+  inset: 0;
+
+  z-index: 20;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #000;
+
+  transition:
+    opacity 700ms ease,
+    visibility 700ms ease;
+}
+
+.start-name {
+  position: absolute;
+
+  top: 5vh;
+  left: 5vw;
+
+  font-family: "Pixelify Sans", monospace;
+
+  font-size: clamp(18px, 1.5vw, 24px);
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.start-prompt {
+  font-family: "Pixelify Sans", monospace;
+
+  font-size: 18px;
+
+  letter-spacing: 0.08em;
+
+  animation: promptPulse 1.6s ease-in-out infinite;
+
+  cursor: pointer;
+}
+
+.start-screen.hidden {
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+    MAIN MENU ENTRANCE
+    ========================================================= */
+
+.menu.entering {
+  animation: menuEnterMain 700ms ease forwards;
+}
+
+@keyframes menuEnterMain {
+  from {
+    opacity: 0;
+
+    transform: translateX(40px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+/* =========================================================
+    MAIN MENU EXIT
+    ========================================================= */
+
+.menu.exiting {
+  animation: menuExit 700ms ease forwards;
+}
+
+@keyframes menuExit {
+  0% {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform: translateX(-40px);
+  }
+}
+
+/* =========================================================
+    ANIMATIONS
+    ========================================================= */
+
+@keyframes menuEnter {
+  0% {
+    opacity: 0;
+
+    transform: translateY(-48%) translateX(-18px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateY(-50%) translateX(0);
+  }
+}
+
+@keyframes uiFadeIn {
+  0% {
+    opacity: 0;
+
+    transform: translateY(-8px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes selectionFlicker {
+  0% {
+    opacity: 0.5;
+  }
+
+  45% {
+    opacity: 0.85;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes promptPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes backgroundBreathing {
+  0%,
+  100% {
+    transform: scale(1.02);
+  }
+
+  50% {
+    transform: scale(1.045);
+  }
+}
+
+/* =========================================================
+    MOBILE
+    ========================================================= */
+
+@media (max-width: 700px) {
+  .menu {
+    padding: 5vh 6vw;
+  }
+
+  .experience {
+    left: 6vw;
+
+    width: min(330px, 70vw);
+  }
+
+  .controls {
+    left: 6vw;
+
+    width: min(330px, 70vw);
+  }
+
+  .name {
+    font-size: 16px;
+  }
+
+  .menu-item {
+    font-size: 19px;
+
+    padding: 10px 12px;
+  }
+
+  .experience h1 {
+    font-size: 10px;
+  }
+}
+
+/* =========================================================
+    DEVELOPMENT PAGE
+    ========================================================= */
+
+.development {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+
+  padding: 5vh 5vw;
+
+  font-family: "Pixelify Sans", monospace;
+}
+
+/* =========================================================
+    HEADER
+    ========================================================= */
+
+.dev-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.dev-title {
+  font-size: 20px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.dev-email {
+  margin-top: 4px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dev-status {
+  font-size: 10px;
+
+  letter-spacing: 0.1em;
+
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================================================
+    SECTION NAVIGATION
+    ========================================================= */
+
+.dev-navigation {
+  position: absolute;
+
+  left: 5vw;
+  top: 18vh;
+
+  width: 220px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.dev-nav-item {
+  width: 100%;
+
+  padding: 10px 14px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-family: "Pixelify Sans", monospace;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.06em;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    color 120ms ease,
+    padding-left 120ms ease;
+}
+
+.dev-nav-item:hover {
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  padding-left: 20px;
+}
+
+.dev-nav-item.selected {
+  color: #000;
+
+  background: #fff;
+
+  padding-left: 20px;
+}
+
+/* =========================================================
+    CONTENT
+    ========================================================= */
+
+.dev-content {
+  position: absolute;
+
+  left: 32vw;
+  right: 5vw;
+
+  top: 22vh;
+}
+
+/* =========================================================
+    CONTENT HEADER
+    ========================================================= */
+
+.dev-content-header {
+  margin-bottom: 12px;
+
+  font-size: 10px;
+
+  letter-spacing: 0.14em;
+
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================================================
+    CONTENT BROWSER
+    ========================================================= */
+
+.content-browser {
+  display: grid;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+
+  min-height: 330px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* =========================================================
+    ITEM LIST
+    ========================================================= */
+
+.item-list {
+  display: flex;
+
+  flex-direction: row;
+  align-items: flex-start;
+
+  padding-top: 8px;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.project-item {
+  width: auto;
+  height: auto;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 14px;
+
+  padding: 9px 12px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.45);
+
+  font-family: "Pixelify Sans", monospace;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.06em;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 120ms ease,
+    color 120ms ease,
+    padding-left 120ms ease;
+}
+
+.project-index {
+  width: 20px;
+
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.project-item:hover {
+  color: #fff;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  padding-left: 18px;
+}
+
+.project-item.selected {
+  color: #000;
+
+  background: #fff;
+
+  padding-left: 18px;
+}
+
+.project-item.selected .project-index {
+  color: #000;
+}
+
+/* =========================================================
+    ITEM DETAILS
+    ========================================================= */
+
+.item-details {
+  position: relative;
+
+  min-height: 330px;
+
+  padding: 30px 40px;
+
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.item-number {
+  position: absolute;
+
+  top: 30px;
+  right: 35px;
+
+  font-size: 11px;
+
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.item-details h1 {
+  margin-bottom: 8px;
+
+  font-size: clamp(25px, 3vw, 42px);
+
+  letter-spacing: 0.04em;
+}
+
+.item-description {
+  margin-bottom: 22px;
+
+  font-size: 11px;
+
+  letter-spacing: 0.1em;
+
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.item-stack {
+  margin-bottom: 28px;
+
+  font-size: 10px;
+
+  letter-spacing: 0.07em;
+
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.item-long-description {
+  max-width: 520px;
+
+  margin-bottom: 35px;
+  font-size: 12px;
+
+  line-height: 1.7;
+
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* =========================================================
+    OPEN ITEM
+    ========================================================= */
+
+.item-open {
+  position: absolute;
+
+  left: 35px;
+  bottom: 28px;
+
+  padding: 7px 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  background: transparent;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  font-family: "Pixelify Sans", monospace;
+
+  font-size: 10px;
+
+  letter-spacing: 0.06em;
+
+  cursor: pointer;
+
+  transition:
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.item-open:hover {
+  background: #fff;
+
+  color: #000;
+}
+
+/* =========================================================
+    ITEM CHANGE ANIMATION
+    ========================================================= */
+
+.item-refresh {
+  animation: itemRefresh 180ms ease-out;
+}
+
+@keyframes itemRefresh {
+  0% {
+    opacity: 0;
+
+    transform: translateX(8px);
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}
+
+/* =========================================================
+   CREATIVE PAGE
+   ========================================================= */
+.creative {
+  position: relative;
+
+  width: 100%;
+  height: 100vh;
+
+  padding: 5vh 5vw;
+
+  font-family: "Pixelify Sans", monospace;
+}
+
+.creative-content {
+  position: absolute;
+  left: 32vw;
+  right: 5vw;
+  top: 22vh;
+}
+
+.creative-header {
+  margin-bottom: 12px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* SAME CONTAINER STYLE AS DEVELOPMENT */
+
+.creative-browser {
+  min-height: 400px;
+  max-height: 46vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent; /* Firefox */
+
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  background: rgba(0, 0, 0, 0.18);
+
+  padding: 30px 40px;
+}
+
+/* Chrome / Brave / Edge */
+.creative-browser::-webkit-scrollbar {
+  width: 6px;
+}
+.creative-browser::-webkit-scrollbar-track {
+  background: transparent;
+}
+.creative-browser::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0; /* keep it blocky/pixel, not rounded */
+}
+.creative-browser::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================================================
+   MUSIC
+   ========================================================= */
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 36px 28px;
+  padding-left: 50px;
+}
+
+.music-card {
+  position: relative;
+
+  width: 150px;
+  height: 150px;
+
+  text-decoration: none;
+}
+
+.cover {
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  object-fit: cover;
+
+  top: 50%;
+  left: 0;
+
+  transform: translateY(-50%);
+
+  transition: 0.6s ease;
+
+  z-index: 2;
+
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
+}
+
+.music-card:hover .cover,
+.music-card.selected .cover {
+  transform: translateY(-50%) translateX(-45px);
+}
+
+.track-title {
+  position: absolute;
+
+  bottom: -26px;
+  left: 0;
+
+  width: 150px;
+
+  font-size: 11px;
+  letter-spacing: 0.1em;
+
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.music-card.selected .cover {
+  outline: 2px solid #fff;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+}
+
+.music-card.selected .track-title {
+  color: #fff;
+}
+
+/* =========================================================
+   FILM
+   ========================================================= */
+
+.film-layout {
+  display: grid;
+
+  grid-template-columns: 320px 1fr;
+
+  gap: 60px;
+
+  align-items: stretch;
+
+  min-height: 400px;
+  height: 46vh;      
+
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  background: rgba(0, 0, 0, 0.18);
+
+  padding: 40px;
+}
+
+.film-info {
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 12px; /* room for scrollbar so text doesn't sit under it */
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+}
+
+.film-info::-webkit-scrollbar {
+  width: 6px;
+}
+.film-info::-webkit-scrollbar-track {
+  background: transparent;
+}
+.film-info::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0;
+}
+.film-info::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.film-poster img {
+  max-width: 100%;
+  max-height: 50vh;
+  width: auto;
+  height: auto;
+
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.08);
+}
+
+.coming-soon {
+  margin-bottom: 20px;
+
+  font-size: 11px;
+
+  letter-spacing: 0.15em;
+
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.film-info h1 {
+  font-size: clamp(34px, 4vw, 52px);
+  margin-bottom: 18px;
+}
+
+.synopsis {
+  max-width: 600px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 30px;
+}
+
+.synopsis-text {
+  display: inline;
+}
+
+.synopsis-hidden {
+  display: none;
+}
+
+.read-more-btn {
+  display: inline;
+  margin-left: 6px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+
+  color: #fff;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.read-more-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+.about-text {
+  max-width: 620px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+}
+.about-link {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  transition: 0.15s ease;
+}
+
+.about-link:hover {
+  color: #000;
+  background: #fff;
+  border-bottom-color: #fff;
+}
+
+.award-laurel {
+  position: absolute;
+  top: 24px;
+  right: 35px;
+  width: 200px;
+  height: auto;
+  margin-bottom: 0;
+}
+
+.about-block {
+  min-height: 330px;
+  padding: 30px 40px;
+  background: rgba(0, 0, 0, 0.18);
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-quote {
+  margin-top: 24px;
+  padding-left: 18px;
+
+  max-width: 520px;
+  border-left: 2px solid rgba(255, 255, 255, 0.3);
+
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+
+  color: rgba(47, 185, 34, 0.925);
+}
+
+.about-quote::before {
+  content: "“";
+}
+
+.about-quote::after {
+  content: "”";
+}
+/* =========================================================
+   RESPONSIVE — TABLET (≤800px)
+   Extends/replaces the existing partial dev-only block.
+   Applies to BOTH .development and .creative since they
+   share .dev-navigation / .dev-nav-item / .content-browser.
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .dev-navigation {
+    width: 180px;
+  }
+
+  .dev-content,
+  .creative-content {
+    left: 5vw;
+    right: 5vw;
+    top: 43vh;
+  }
+
+  .content-browser {
+    grid-template-columns: 150px 1fr;
+  }
+
+  .item-details {
+    padding: 25px;
+  }
+
+  .creative-browser,
+  .film-layout,
+  .about-block {
+    padding: 20px 24px;
+  }
+
+  .film-layout {
+    grid-template-columns: 220px 1fr;
+    gap: 30px;
+  }
+
+  .music-grid {
+    padding-left: 0;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 28px 20px;
+  }
+
+  .music-card,
+  .cover {
+    width: 130px;
+    height: 130px;
+  }
+
+  .track-title {
+    width: 130px;
+  }
+
+  .award-laurel {
+    width: 130px;
+    top: 20px;
+    right: 25px;
+  }
+
+  .controls {
+    display: none;
+  }
+
+  .dev-header {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE — PHONE (≤480px)
+   Structural shift: nav + content go from absolute
+   positioning to normal document flow (stacked).
+   No HTML changes needed — DOM order is already
+   header → nav → content, so flow does the rest.
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+  body {
+    overflow-y: auto; /* allow the page itself to scroll once content stacks */
+  }
+
+  .development,
+  .creative {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    padding: 4vh 4vw 24px; 
+  }
+
+  .dev-header {
+    padding-bottom: 12px;
+  }
+
+  .dev-title {
+    font-size: 16px;
+  }
+
+  .dev-email {
+    font-size: 9px;
+  }
+
+  .dev-status {
+    font-size: 9px;
+  }
+
+  /* --- NAV: sidebar → horizontal scrollable strip --- */
+
+  .dev-navigation {
+    position: static;
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 6px;
+    padding: 14px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dev-nav-item {
+    flex: 0 0 auto;
+    width: auto;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .dev-nav-item:hover,
+  .dev-nav-item.selected {
+    padding-left: 12px; /* cancel the desktop hover/selected indent shift */
+  }
+
+  /* --- CONTENT: absolute → static flow --- */
+
+  .dev-content,
+  .creative-content {
+    position: static;
+    margin-top: 16px;
+  }
+
+  /* --- DEV PROJECT/EXPERIENCE BROWSER --- */
+
+  .content-browser {
+    grid-template-columns: 1fr; /* stack: list strip on top, details below */
+    min-height: 0;
+  }
+
+  .item-list {
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .project-item {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .item-details {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .item-details h1 {
+    font-size: clamp(20px, 6vw, 28px);
+  }
+
+  .item-long-description {
+    max-width: 100%;
+  }
+
+  .item-open {
+    position: static;
+    display: inline-block;
+    margin-top: 20px;
+  }
+
+  /* --- CREATIVE BROWSER (music/about wrapper) --- */
+
+  .creative-browser {
+    min-height: 0;
+    max-height: none;
+    overflow-y: visible;
+    padding: 20px;
+  }
+
+  .music-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 20px;
+  }
+
+    .music-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 36px 20px;      /* more vertical breathing room */
+  }
+
+  .music-card {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+
+  .cover {
+    position: static;       /* was absolute — no longer needs to be pulled out of flow */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    top: auto;
+    left: auto;
+    transform: none !important; 
+  }
+
+  .track-title {
+    position: static;       
+    width: 100%;
+    margin-top: 8px;
+    bottom: auto;
+  }
+
+  .music-card.selected .cover {
+    outline: none;                                   
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);   
+  }
+
+  /* --- FILM: side-by-side → stacked --- */
+
+  .film-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 20px;
+  }
+
+  .film-poster img {
+    max-height: 45vh;
+  }
+
+  .film-info {
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
+    margin-top: 20px;
+  }
+
+  .film-info h1 {
+    font-size: clamp(24px, 8vw, 32px);
+  }
+
+  .synopsis {
+    max-width: 100%;
+  }
+
+  /* --- ABOUT --- */
+
+  .about-block {
+    min-height: 0;
+    padding: 20px;
+  }
+
+  .about-text,
+  .about-quote {
+    max-width: 100%;
+  }
+
+  /* --- AWARDS --- */
+
+  .award-laurel {
+    position: static;
+    display: block;
+    width: 110px;
+    margin: 0 0 16px;
+  }
+
+  /* --- FOOTER CONTROLS --- */
+
+    .controls {
+    display: none;
+  }
+}

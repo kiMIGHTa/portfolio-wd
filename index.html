@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dennis Kimaita</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #000;
+      }
+      #content-frame {
+        border: none;
+        width: 100%;
+        height: 100vh;
+        display: block;
+        background: transparent;
+      }
+      #loading-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background: #000;
+        display: flex;
+        flex-direction: column; 
+        align-items: center;
+        justify-content: center;
+        transition:
+          opacity 400ms ease,
+          visibility 400ms ease;
+      }
+
+      #loading-screen.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .loading-bar-track {
+        width: 240px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .loading-bar-fill {
+        height: 100%;
+        width: 0%;
+        background: #fff;
+        transition: width 300ms ease;
+      }
+      .loading-text {
+        margin-bottom: 14px;
+        font-family: "Pixelify Sans", monospace;
+        font-size: 12px;
+        letter-spacing: 0.15em;
+        color: rgba(255, 255, 255, 0.6);
+        text-transform: uppercase;
+        animation: promptPulse 1.6s ease-in-out infinite;
+      }
+
+      @keyframes promptPulse {
+        0%,
+        100% {
+          opacity: 0.35;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <audio
+      id="bg-sfx"
+      src="assets/audio/background-audio.mp3"
+      preload="auto"
+      loop
+    ></audio>
+    <iframe id="content-frame" src="home.html" allow="autoplay"></iframe>
+
+    <div id="loading-screen">
+      <div class="loading-text" id="loading-text">LOADING</div>
+
+      <div class="loading-bar-track">
+        <div class="loading-bar-fill" id="loading-bar-fill"></div>
+      </div>
+    </div>
+
+    <script>
+      const frame = document.getElementById("content-frame");
+      const bgSfx = document.getElementById("bg-sfx");
+      const loadingScreen = document.getElementById("loading-screen");
+      const loadingBarFill = document.getElementById("loading-bar-fill");
+
+      let iframeLoaded = false;
+      let audioReady = false;
+
+      function updateProgress() {
+        const done = [iframeLoaded, audioReady].filter(Boolean).length;
+        loadingBarFill.style.width = `${(done / 2) * 100}%`;
+
+        if (iframeLoaded && audioReady) {
+          setTimeout(() => {
+            loadingScreen.classList.add("hidden");
+            frame.contentWindow.focus();
+            frame.contentWindow.document.body.focus();
+          }, 200); // small pause so 100% is visible before it disappears
+        }
+      }
+
+      frame.addEventListener("load", () => {
+        iframeLoaded = true;
+        updateProgress();
+      });
+
+      bgSfx.addEventListener(
+        "canplaythrough",
+        () => {
+          audioReady = true;
+          updateProgress();
+        },
+        { once: true },
+      );
+
+      // Safety net: if canplaythrough never fires (e.g. autoplay policy quirks), don't hang forever
+      setTimeout(() => {
+        if (!audioReady) {
+          audioReady = true;
+          updateProgress();
+        }
+      }, 4000);
+    </script>
+  </body>
+</html>
