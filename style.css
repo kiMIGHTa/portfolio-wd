@@ -1432,6 +1432,10 @@ body::after {
     font-size: clamp(24px, 8vw, 32px);
   }
 
+  .film-buttons{
+    padding-bottom: 10px;
+  }
+
   .synopsis {
     max-width: 100%;
   }
