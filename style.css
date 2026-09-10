@@ -1267,7 +1267,7 @@ body::after {
     flex-direction: column;
     height: auto;
     min-height: 100vh;
-    padding: 4vh 4vw 24px; 
+    padding: 4vh 4vw 32px; 
   }
 
   .dev-header {
